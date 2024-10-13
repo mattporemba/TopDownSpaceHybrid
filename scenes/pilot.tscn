@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bhufecuo5doc"]
-
-[ext_resource type="Texture2D" uid="uid://clmf4hnnxiciy" path="res://sprites/fighter.png" id="1_k6sla"]
-
-[node name="Sprite2D" type="Sprite2D"]
-texture = ExtResource("1_k6sla")
