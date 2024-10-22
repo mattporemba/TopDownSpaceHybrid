@@ -1,6 +1,15 @@
-[gd_scene format=3 uid="uid://dm12q40wsrt7m"]
+[gd_scene load_steps=3 format=3 uid="uid://dm12q40wsrt7m"]
+
+[ext_resource type="Texture2D" uid="uid://dee1f64dlmjik" path="res://sprites/starmap-rough-Sheet.png" id="1_hduv4"]
+[ext_resource type="PackedScene" uid="uid://bchc03q8y6i02" path="res://scenes/ship.tscn" id="2_6jasb"]
 
 [node name="Sandbox" type="Node"]
 
-[node name="TileMap" type="TileMap" parent="."]
-format = 2
+[node name="Background" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.713726)
+texture = ExtResource("1_hduv4")
+
+[node name="Ship" parent="." instance=ExtResource("2_6jasb")]
+
+[node name="Camera2D" type="Camera2D" parent="Ship"]
+zoom = Vector2(2, 2)

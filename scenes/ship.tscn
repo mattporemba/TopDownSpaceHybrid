@@ -1,14 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://bchc03q8y6i02"]
+[gd_scene load_steps=4 format=3 uid="uid://bchc03q8y6i02"]
 
+[ext_resource type="Script" path="res://scripts/ship.gd" id="1_ely1i"]
 [ext_resource type="Texture2D" uid="uid://clmf4hnnxiciy" path="res://sprites/fighter.png" id="1_su2og"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qahqb"]
 height = 56.0
 
 [node name="Ship" type="CharacterBody2D"]
+script = ExtResource("1_ely1i")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_su2og")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_qahqb")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 21.0
+offset_top = -57.0
+offset_right = 113.0
+offset_bottom = -34.0
+text = "VELOCITY:"
