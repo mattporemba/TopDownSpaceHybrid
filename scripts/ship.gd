@@ -17,6 +17,21 @@ func _physics_process(delta):
 	# TODO: Max yaw speed
 	look_at(get_global_mouse_position())
 	
+	# Handle space braking or translational movement.
+	var thrust_vector
+	if Input.is_action_pressed("space_brake"):
+		thrust_vector = handle_space_brake()
+	else:
+		thrust_vector = handle_translational_movement()
+	
+	ship_vector += thrust_vector.rotated(rotation)
+	velocity = ship_vector * delta
+	move_and_slide()
+	
+	label.text = "vel: " + str(velocity)
+
+
+func handle_translational_movement() -> Vector2:
 	# Handle translational input.
 	# These are messed up:
 	#	Sprite is rotated 90 degrees
@@ -31,38 +46,22 @@ func _physics_process(delta):
 	var x_thrust = Input.get_axis("left_strafe", "right_strafe")
 	if x_thrust:
 		thrust_vector.y = x_thrust * STRAFE_THRUST
-	
-	ship_vector += thrust_vector.rotated(rotation)
-	velocity = ship_vector * delta
-	move_and_slide()
-	
-	
-	
-	## Handle space braking
-	#if Input.is_action_pressed("space_brake"):
-		#if ship_vector.x > 0.0:
-			#ship_vector.x -= STRAFE_THRUST * delta
-		#elif ship_vector.x < 0.0:
-			#ship_vector.x += STRAFE_THRUST * delta
-		#if ship_vector.y < 0.0:
-			#ship_vector.y += REVERSE_THRUST * delta
-			#if ship_vector.y > 0.0:
-				#ship_vector.y = 0.0
-		#elif ship_vector.y > 0.0:
-			#ship_vector.y -= FORWARD_THRUST * delta
-			#if ship_vector.y < 0.0:
-				#ship_vector.y = 0.0
-	#
-#
-	#label.text = "vel: " + str(velocity) + ", vec: " + str(ship_vector)
-	#
-	## Handle yaw
-	#var mouseInput = Input.get_last_mouse_velocity()
-	#if mouseInput:
-		#if mouseInput.x > 0:
-			#rotation_degrees += YAW_SPEED * delta
-		#elif mouseInput.x < 0:
-			#rotation_degrees -= YAW_SPEED * delta
-	#
-	#velocity = ship_vector.rotated(rotation_degrees)
-	#move_and_slide()
+	return thrust_vector
+
+
+func handle_space_brake() -> Vector2:
+	# Again, acount for have velocity x and y reversed.
+	var brake_vector = Vector2(0.0, 0.0)
+	if velocity.x > 0.0:
+		brake_vector.x = STRAFE_THRUST * -1.0
+	elif velocity.x < 0.0:
+		brake_vector.x = STRAFE_THRUST
+	#if ship_vector.y < 0.0:
+		#thrust_vector.y += REVERSE_THRUST
+		#if thrust_vector.y > 0.0:
+			#thrust_vector.y = 0.0
+	#elif ship_vector.y > 0.0:
+		#thrust_vector.y -= FORWARD_THRUST
+		#if thrust_vector.y < 0.0:
+			#thrust_vector.y = 0.0
+	return brake_vector

@@ -14,6 +14,7 @@ rotation = 1.5708
 texture = ExtResource("1_su2og")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
 shape = SubResource("CapsuleShape2D_qahqb")
 
 [node name="Label" type="Label" parent="."]
