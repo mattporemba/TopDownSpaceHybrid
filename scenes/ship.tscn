@@ -10,6 +10,7 @@ height = 56.0
 script = ExtResource("1_ely1i")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
 texture = ExtResource("1_su2og")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
