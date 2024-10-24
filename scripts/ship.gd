@@ -3,17 +3,14 @@ extends CharacterBody2D
 const FORWARD_THRUST = 200.0
 const REVERSE_THRUST = 100.0
 const STRAFE_THRUST = 150.0
-const MAX_SPEED = 1000.0
-const YAW_SPEED = 100.0
-
+const MAX_SPEED = 1000.0  # TODO: Implement
+const YAW_SPEED = 3.5
 var ship_vector = Vector2(0.0, 0.0)
-
 @onready var label = $Label
 
 
 func _physics_process(delta):
-	# TODO: Max yaw speed
-	look_at(get_global_mouse_position())
+	handle_rotation(delta)
 	
 	# Handle space braking or translational movement.
 	if Input.is_action_pressed("space_brake"):
@@ -24,7 +21,14 @@ func _physics_process(delta):
 		velocity = ship_vector * delta
 		move_and_slide()
 	
-	label.text = "vel x: " + str(velocity.x) + "\nvel y : " + str(velocity.y) + "\nship x: " + str(ship_vector.x) + "\nship y: " + str(ship_vector.y)
+	label.text = "rot: " + str(rotation) + "\nvel x: " + str(velocity.x) + "\nvel y : " + str(velocity.y) + "\nship x: " + str(ship_vector.x) + "\nship y: " + str(ship_vector.y)
+
+
+func handle_rotation(delta):
+	var target = get_global_mouse_position()
+	var direction = (target - global_position)
+	var angle_to = transform.x.angle_to(direction)
+	rotate(sign(angle_to) * min(delta * YAW_SPEED, abs(angle_to)))
 
 
 func handle_translational_movement() -> Vector2:
