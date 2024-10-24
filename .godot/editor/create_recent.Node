@@ -1,8 +1,0 @@
-Label
-Camera2D
-Sprite2D
-TileMap
-CollisionShape2D
-CharacterBody2D
-Node2D
-Node
