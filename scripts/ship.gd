@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+# Movement
 const FORWARD_THRUST = 200.0
 const REVERSE_THRUST = 100.0
 const STRAFE_THRUST = 150.0
@@ -7,6 +8,17 @@ const MAX_SPEED = 1000.0  # TODO: Implement
 const YAW_SPEED = 3.5
 var ship_vector = Vector2(0.0, 0.0)
 @onready var label = $Label
+
+# Shooting
+signal shoot(bullet, direction, location, bullet_velocity: Vector2)
+var bullet_speed = 1000.0
+var Bullet = preload("res://scenes/bullet.tscn")
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("primary_fire"):
+		var bullet_velocity = Vector2(velocity.x + bullet_speed, velocity.y)
+		shoot.emit(Bullet, rotation, position, bullet_velocity)
 
 
 func _physics_process(delta):
