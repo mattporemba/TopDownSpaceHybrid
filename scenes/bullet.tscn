@@ -1,16 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://cd34lq70utp07"]
+[gd_scene load_steps=4 format=3 uid="uid://b6s354vl2sjps"]
 
+[ext_resource type="Script" path="res://scripts/bullet.gd" id="1_ibqsr"]
 [ext_resource type="Texture2D" uid="uid://bdsd31htkd0a0" path="res://sprites/plasma_bolt_small.png" id="1_txtjl"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2h00"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o0wbk"]
 size = Vector2(8, 2)
 
-[node name="Bullet" type="Node2D"]
+[node name="Bullet" type="Area2D"]
+script = ExtResource("1_ibqsr")
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
-shape = SubResource("RectangleShape2D_w2h00")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_o0wbk")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708
