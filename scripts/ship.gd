@@ -11,8 +11,11 @@ var ship_vector = Vector2(0.0, 0.0)
 
 # Shooting
 signal shoot(bullet, direction, location, bullet_velocity: Vector2)
-var bullet_speed = 1000.0
+var bullet_speed = 100.0
 var Bullet = preload("res://scenes/bullet.tscn")
+
+# Debug
+const DEBUG_SHIP_DIRECTION_LINE_MAGNITUDE = 100.0
 
 
 func _input(event: InputEvent) -> void:
@@ -87,3 +90,24 @@ func handle_space_brake(delta):
 		velocity.y = 0.0
 		ship_vector.y = 0.0
 	move_and_slide()
+
+func _process(_delta: float) -> void:
+	queue_redraw()
+
+# TODO: In leu of a HUD, draw a velocity vector of the player ship.
+func _draw() -> void:
+	if OS.is_debug_build():
+		
+		# TODO: Unecessary to calculate rotation b/c line is a child of Ship.
+		#         However, when moving this functionality to a HUD, this might
+		#         be useful so I'm leaving it here for now.
+		#var target_vector = Vector2(
+			#DEBUG_SHIP_DIRECTION_LINE_MAGNITUDE * cos(rotation),
+			#DEBUG_SHIP_DIRECTION_LINE_MAGNITUDE * sin(rotation)
+		#)
+		
+		# Draws a straight out line
+		var target_vector_forward = Vector2(DEBUG_SHIP_DIRECTION_LINE_MAGNITUDE, 0.0)
+		draw_line(position.normalized(), position.normalized() + target_vector_forward, Color.GREEN, 4.0)
+		var target_vector_lateral = Vector2(0.0, DEBUG_SHIP_DIRECTION_LINE_MAGNITUDE/2)
+		draw_line(position.normalized(), position.normalized() + target_vector_lateral, Color.GREEN, 4.0)
